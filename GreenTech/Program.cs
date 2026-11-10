@@ -3,6 +3,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// 1. Megkeressük a kapcsolati karakterláncot az appsettings.json-ból
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// 2. Regisztráljuk a DbContextet SQLite providerrel
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(connectionString));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
